@@ -11,7 +11,8 @@ module Legion
             @experiences = {}
           end
 
-          def create_quale(content:, modality: :abstract, quality: :smooth, texture: :fluid, vividness: DEFAULT_VIVIDNESS, valence: DEFAULT_VALENCE)
+          def create_quale(content:, modality: :abstract, quality: :smooth, texture: :fluid,
+                           vividness: DEFAULT_VIVIDNESS, valence: DEFAULT_VALENCE)
             prune_faint
             quale = Quale.new(content: content, modality: modality, quality: quality,
                               texture: texture, vividness: vividness, valence: valence)
@@ -73,8 +74,8 @@ module Legion
           end
 
           def modality_distribution
-            MODALITIES.each_with_object({}) do |mod, hash|
-              hash[mod] = @experiences.values.count { |q| q.modality == mod }
+            MODALITIES.to_h do |mod|
+              [mod, @experiences.values.count { |q| q.modality == mod }]
             end
           end
 
@@ -95,17 +96,17 @@ module Legion
 
           def qualia_report
             {
-              total_experiences:     @experiences.size,
-              vivid_count:           vivid_experiences.size,
-              faint_count:           faint_experiences.size,
-              pleasant_count:        pleasant_experiences.size,
-              unpleasant_count:      unpleasant_experiences.size,
-              average_vividness:     average_vividness,
-              average_valence:       average_valence,
-              phenomenal_richness:   phenomenal_richness,
+              total_experiences:      @experiences.size,
+              vivid_count:            vivid_experiences.size,
+              faint_count:            faint_experiences.size,
+              pleasant_count:         pleasant_experiences.size,
+              unpleasant_count:       unpleasant_experiences.size,
+              average_vividness:      average_vividness,
+              average_valence:        average_valence,
+              phenomenal_richness:    phenomenal_richness,
               experiential_diversity: experiential_diversity,
-              richness_label:        Constants.label_for(RICHNESS_LABELS, phenomenal_richness),
-              most_vivid:            most_vivid(limit: 3).map(&:to_h)
+              richness_label:         Constants.label_for(RICHNESS_LABELS, phenomenal_richness),
+              most_vivid:             most_vivid(limit: 3).map(&:to_h)
             }
           end
 

@@ -13,7 +13,8 @@ module Legion
                       :valence, :original_vividness, :created_at
           attr_accessor :vividness
 
-          def initialize(content:, modality: :abstract, quality: :smooth, texture: :fluid, vividness: DEFAULT_VIVIDNESS, valence: DEFAULT_VALENCE)
+          def initialize(content:, modality: :abstract, quality: :smooth, texture: :fluid,
+                         vividness: DEFAULT_VIVIDNESS, valence: DEFAULT_VALENCE)
             @id = SecureRandom.uuid
             @content = content.to_s
             @modality = valid_modality(modality)

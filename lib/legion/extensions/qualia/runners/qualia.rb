@@ -7,7 +7,8 @@ module Legion
         module Qualia
           include Legion::Extensions::Helpers::Lex if defined?(Legion::Extensions::Helpers::Lex)
 
-          def create_quale(content:, modality: :abstract, quality: :smooth, texture: :fluid, vividness: nil, valence: nil, engine: nil, **)
+          def create_quale(content:, modality: :abstract, quality: :smooth, texture: :fluid, vividness: nil,
+                           valence: nil, engine: nil, **)
             eng = engine || @default_engine
             quale = eng.create_quale(content: content, modality: modality, quality: quality,
                                      texture: texture,
@@ -19,7 +20,7 @@ module Legion
           def intensify_quale(quale_id:, amount: nil, engine: nil, **)
             eng = engine || @default_engine
             quale = eng.intensify(quale_id: quale_id,
-                                  amount: amount || Helpers::Constants::VIVIDNESS_BOOST)
+                                  amount:   amount || Helpers::Constants::VIVIDNESS_BOOST)
             return { success: false, error: 'quale not found' } unless quale
 
             { success: true, quale: quale.to_h }
